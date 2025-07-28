@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    .strikeout {
+      text-decoration: line-through;
+    }
+
+    .button-container {
+      display: flex;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+
+<body>
+  <h1>ToDo Applications</h1>
+  <div>
+    <form action="/" method="post">
+      <input type="text" name="title" placeholder="Add new task..." required />
+      <button type="submit">Add</button>
+    </form>
+
+    <th:block th:each="task : ${tasks}">
+      <div>
+        <span th:text="${task.title}" th:classappend="${task.done} ? 'strikeout' : ''">Task Title</span>
+
+        <div class="button-container">
+          <form th:action="@{ '/' + ${task.id} + '/delete' }" method="post">
+            <button type="submit">Del</button>
+          </form>
+
+          <form th:action="@{ '/' + ${task.id} + '/toggle' }" method="post">
+            <button type="submit">Mark</button>
+          </form>
+        </div>
+      </div>
+    </th:block>
+  </div>
+</body>
+
+</html>
